@@ -1,4 +1,6 @@
 venv/
-.venv/
-env/
 .env
+node_modules
+app/services/__pycache__
+app/models/__pycache__
+app/__pycache__
