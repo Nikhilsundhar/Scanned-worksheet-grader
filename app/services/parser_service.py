@@ -65,10 +65,13 @@ Extract:
 - question_id
 - question_text
 - ideal_answer
+- max_marks
 
 IMPORTANT:
 - Ensure each question has unique Q1, Q2, Q3...
 - Maintain order
+- Extract marks from lines like "Marks: 5"
+- If missing, default to 5
 
 STRICT:
 - Return ONLY JSON array
@@ -81,7 +84,8 @@ OUTPUT FORMAT:
   {{
     "question_id": "Q1",
     "question_text": "...",
-    "ideal_answer": "..."
+    "ideal_answer": "...",
+    "max_marks": 5
   }}
 ]
 

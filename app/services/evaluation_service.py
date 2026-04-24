@@ -42,12 +42,9 @@ Ideal Answer:
 Similarity Score: {sim}
 
 Scoring Rules:
-- 5 = completely correct, minor grammar errors allowed
-- 4 = mostly correct, small missing details
-- 3 = partially correct, some important points missing
-- 2 = limited understanding
-- 1 = mostly incorrect
-- 0 = wrong or irrelevant
+- Give score BETWEEN 0 and {max_marks}
+- Ignore spelling mistakes if meaning is correct
+- Focus on concept understanding
 
 IMPORTANT:
 - Ignore spelling mistakes if meaning is correct
@@ -65,11 +62,15 @@ Return ONLY JSON:
     # print("\n--- EVAL LLM OUTPUT ---\n", raw_output)
     llm_output = safe_json_load(raw_output)
 
-    # Step 3: combine
-    final_score = (0.6* llm_output["score"]) + (0.4 * sim * max_marks)
+    llm_score = llm_output["score"]
+    sim_score = sim * max_marks
+
+    # final score
+    final_score = (0.6 * llm_score) + (0.4 * sim_score)
 
     return {
         "similarity": float(sim),
         "score": float(round(final_score, 2)),
+        "max_marks": max_marks,
         "feedback": llm_output["feedback"]
     }

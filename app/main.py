@@ -91,14 +91,21 @@ async def evaluate(req:EvaluationRequest):
 
     results = []
 
+    total_score = 0
+    total_max = 0
+
     for ans in req.student_answers:
         qid = ans.question_id
 
         if qid in key_map:
             res = evaluate_question(
                 ans.student_answer,
-                key_map[qid].ideal_answer
+                key_map[qid].ideal_answer,
+                key_map[qid].max_marks
             )
+
+            total_score += res["score"]
+            total_max += key_map[qid].max_marks
 
             results.append({
                 "question_id": qid,
@@ -106,6 +113,8 @@ async def evaluate(req:EvaluationRequest):
             })
 
     return {
-        "total_questions": len(results),
+        "total_score": round(total_score, 2),
+        "total_max_marks": total_max,
+        "percentage": round((total_score / total_max) * 100, 2),
         "results": results
-    }
+}

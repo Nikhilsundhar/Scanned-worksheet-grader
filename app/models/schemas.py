@@ -4,6 +4,7 @@ from typing import List
 class AnswerKeyItem(BaseModel):
     question_id: str
     ideal_answer: str
+    max_marks: int
 
 
 class StudentAnswerItem(BaseModel):
