@@ -1,7 +1,7 @@
 # app/services/parser_service.py
 
 import json
-from app.services.llm_service import call_llm
+from app.services.llm_service import call_llm, call_vision_llm
 import re
 
 def safe_json_load(output: str):
@@ -19,13 +19,13 @@ def safe_json_load(output: str):
         print("\nRAW LLM OUTPUT:\n", output)
         raise ValueError("LLM did not return valid JSON")
 
-def parse_student_answers(ocr_text):
+def parse_student_answers_from_image(image_path: str):
 
     prompt = f"""
-This is OCR text from a handwritten answer sheet.
+This is an image of a handwritten answer sheet.
 
 Your task:
-- Identify each answer
+- Extract and identify each answer
 - Assign correct question_id in order (Q1, Q2, Q3...)
 
 IMPORTANT RULES:
@@ -50,11 +50,8 @@ FORMAT:
     "student_answer": "..."
   }}
 ]
-
-TEXT:
-{ocr_text}
 """
-    output = call_llm(prompt)
+    output = call_vision_llm(prompt, image_path)
     return safe_json_load(output)
 
 

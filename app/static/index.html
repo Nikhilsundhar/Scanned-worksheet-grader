@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Grader | Intelligent Evaluation</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2><span class="gradient-text">AI</span> Grader</h2>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-tab="keys-tab">Answer Keys</li>
+                <li data-tab="evaluate-tab">Evaluate Students</li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Answer Keys Section -->
+            <section id="keys-tab" class="tab-content active">
+                <header class="section-header">
+                    <h1>Manage Answer Keys</h1>
+                    <p>Upload and manage your reference answer keys.</p>
+                </header>
+
+                <div class="card glass-panel upload-card">
+                    <h3>Upload New Answer Key</h3>
+                    <form id="upload-key-form">
+                        <div class="form-group">
+                            <label for="answer-key-id">Answer Key ID</label>
+                            <input type="text" id="answer-key-id" placeholder="e.g. math_101_midterm" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="answer-key-file">Answer Key PDF</label>
+                            <input type="file" id="answer-key-file" accept=".pdf" required>
+                        </div>
+                        <button type="submit" class="btn primary-btn">
+                            <span class="btn-text">Upload & Process</span>
+                            <span class="loader hidden"></span>
+                        </button>
+                    </form>
+                    <div id="upload-key-status" class="status-msg"></div>
+                </div>
+
+                <div class="card glass-panel list-card mt-4">
+                    <h3>Available Answer Keys</h3>
+                    <ul id="answer-keys-list" class="keys-list">
+                        <!-- Populated dynamically -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Evaluation Section -->
+            <section id="evaluate-tab" class="tab-content">
+                <header class="section-header">
+                    <h1>Evaluate Students</h1>
+                    <p>Upload student answer sheets to automatically grade them.</p>
+                </header>
+
+                <div class="card glass-panel upload-card">
+                    <form id="evaluate-form">
+                        <div class="form-group">
+                            <label for="select-answer-key">Select Answer Key</label>
+                            <select id="select-answer-key" required>
+                                <option value="" disabled selected>Select an answer key...</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-sheet-file">Student Answer Sheet Image(s)</label>
+                            <input type="file" id="student-sheet-file" accept="image/*" multiple required>
+                        </div>
+                        <button type="submit" class="btn primary-btn">
+                            <span class="btn-text">Evaluate</span>
+                            <span class="loader hidden"></span>
+                        </button>
+                    </form>
+                    <div id="evaluate-status" class="status-msg"></div>
+                </div>
+
+                <div id="results-container" class="results-container hidden mt-4">
+                    <div class="card glass-panel">
+                        <h3>Evaluation Results</h3>
+                        <div class="score-summary">
+                            <div class="score-circle">
+                                <svg viewBox="0 0 36 36" class="circular-chart">
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <path class="circle" id="score-circle-path" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <text x="18" y="20.35" class="percentage" id="score-percentage">0%</text>
+                                </svg>
+                            </div>
+                            <div class="score-details">
+                                <p class="score-text">Score: <span id="total-score">0</span> / <span id="max-score">0</span></p>
+                            </div>
+                        </div>
+
+                        <div id="question-results" class="question-results">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>
